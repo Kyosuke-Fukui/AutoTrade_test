@@ -68,7 +68,7 @@ int start()
               {                 
                if(Bid>OrderOpenPrice()*(1+TrailingStop/100)) //Modified
                  {
-                  if((OrderStopLoss()<Bid*(1-TrailingStop/100) || (OrderStopLoss()==0)) //Modified
+                  if((OrderStopLoss()<Bid*(1-TrailingStop/100)) || (OrderStopLoss()==0)) //Modified
                     {
                      OrderModify(OrderTicket(),OrderOpenPrice(),Bid*(1-TrailingStop/100),OrderTakeProfit(),0,Green); //Modified
                      return(0);
