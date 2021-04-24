@@ -60,7 +60,7 @@ int start()
         {
          if(OrderType()==OP_BUY)  
            {
-              if((iMA(NULL,PERIOD_M15,60,20,MODE_EMA,PRICE_CLOSE,0)>iMA(NULL,PERIOD_M15,20,60,MODE_EMA,PRICE_CLOSE,0))) //close buy rule
+              if((iMA(NULL,PERIOD_M15,60,1,MODE_EMA,PRICE_CLOSE,0)>iMA(NULL,PERIOD_M15,20,1,MODE_EMA,PRICE_CLOSE,0))) //close buy rule
               {
                    OrderClose(OrderTicket(),OrderLots(),OrderClosePrice(),Slippage,Red);
               }
