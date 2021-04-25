@@ -1,7 +1,9 @@
 
 
 
-extern int MagicNumber=10001;
+extern int MagicNumber=10002;
+extern int MA_period1=20;
+extern int MA_period2=60;
 extern double Lots =0.1;
 extern double StopLoss=0.2; //+per cent
 extern double TakeProfit=0.6; //+per cent
@@ -20,7 +22,7 @@ int start()
   if( TotalOrdersCount()==0 ) 
   {
      int result=0;
-     if((iMA(NULL,PERIOD_M15,20,1,MODE_EMA,PRICE_CLOSE,0)>iMA(NULL,PERIOD_M15,60,1,MODE_EMA,PRICE_CLOSE,0))) //Buy rule
+     if((iMA(NULL,PERIOD_M15,MA_period1,1,MODE_EMA,PRICE_CLOSE,0)>iMA(NULL,PERIOD_M15,MA_period2,1,MODE_EMA,PRICE_CLOSE,0)) && (iMA(NULL,PERIOD_M15,MA_period1,1,MODE_EMA,PRICE_CLOSE,1)<iMA(NULL,PERIOD_M15,MA_period2,1,MODE_EMA,PRICE_CLOSE,1))) //Buy rule
      {
         result=OrderSend(Symbol(),OP_BUY,Lots,Ask,Slippage,0,0,NULL,MagicNumber,0,Blue);
         if(result>0)
@@ -34,7 +36,7 @@ int start()
         }
         return(0);
      }
-     if((iMA(NULL,PERIOD_M15,60,1,MODE_EMA,PRICE_CLOSE,0)>iMA(NULL,PERIOD_M15,20,1,MODE_EMA,PRICE_CLOSE,0))) //Sell rule
+     if((iMA(NULL,PERIOD_M15,MA_period2,1,MODE_EMA,PRICE_CLOSE,0)>iMA(NULL,PERIOD_M15,MA_period1,1,MODE_EMA,PRICE_CLOSE,0)) && (iMA(NULL,PERIOD_M15,MA_period2,1,MODE_EMA,PRICE_CLOSE,1)<iMA(NULL,PERIOD_M15,MA_period1,1,MODE_EMA,PRICE_CLOSE,1))) //Sell rule
      {
         result=OrderSend(Symbol(),OP_SELL,Lots,Bid,Slippage,0,0,NULL,MagicNumber,0,Red);
         if(result>0)
@@ -60,7 +62,7 @@ int start()
         {
          if(OrderType()==OP_BUY)  
            {
-              if((iMA(NULL,PERIOD_M15,60,1,MODE_EMA,PRICE_CLOSE,0)>iMA(NULL,PERIOD_M15,20,1,MODE_EMA,PRICE_CLOSE,0))) //close buy rule
+              if((iMA(NULL,PERIOD_M15,MA_period2,1,MODE_EMA,PRICE_CLOSE,0)>iMA(NULL,PERIOD_M15,MA_period1,1,MODE_EMA,PRICE_CLOSE,0))) //close buy rule
               {
                    OrderClose(OrderTicket(),OrderLots(),OrderClosePrice(),Slippage,Red);
               }
@@ -78,7 +80,7 @@ int start()
            }
          else 
            {
-                if((iMA(NULL,PERIOD_M15,20,1,MODE_EMA,PRICE_CLOSE,0)>iMA(NULL,PERIOD_M15,60,1,MODE_EMA,PRICE_CLOSE,0))) //close sell rule
+                if((iMA(NULL,PERIOD_M15,MA_period1,1,MODE_EMA,PRICE_CLOSE,0)>iMA(NULL,PERIOD_M15,MA_period2,1,MODE_EMA,PRICE_CLOSE,0))) //close sell rule
                 {
                    OrderClose(OrderTicket(),OrderLots(),OrderClosePrice(),Slippage,Red);
                 }
